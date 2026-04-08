@@ -1,11 +1,16 @@
-import Image from "next/image";
+"use client";
+import { useRouter } from "next/navigation"; // ✅
 import LoginPage from "./pages/LoginPage";
 
 export default function Home() {
-  return (
-      <main>
-        <LoginPage/>
-      </main>
+  const router = useRouter();
 
+  return (
+    <main>
+      <LoginPage />
+      <button onClick={() => router.push("/signup")}>
+        Idi na registraciju
+      </button>
+    </main>
   );
 }
