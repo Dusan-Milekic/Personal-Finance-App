@@ -5,7 +5,7 @@ import Illustration from "../components/Illustration";
 import Message from "../components/Message";
 import Button from "../components/Button";
 import Password from "../components/Password";
-import Email from "../components/Email";
+import Email from "../components/Input";
 
 export default function LoginPage() {
   
@@ -31,13 +31,13 @@ export default function LoginPage() {
                         <h1 className="text-[32px] font-bold">Login</h1>
 
                         
-                        <Email/>
+                        <Email text={"Email"} />
                         
-                        <Password showPassword={showPassword} setShowPassword={setShowPassword} />
+                        <Password text={"Password"} showPassword={showPassword} setShowPassword={setShowPassword} />
 
-                        <Button/>
+                        <Button text={"Login"} />
 
-                        <Message/>
+                        <Message text={"Don't have an account?"} link={"Sign Up"} />
 
                     </div>
 

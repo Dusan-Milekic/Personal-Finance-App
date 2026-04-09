@@ -1,9 +1,9 @@
-export default function Message() {
+export default function Message({ text, link }: { text: string; link: string }) {
     return (
         <p className="text-center">
-            Need to create an account?{" "}
+            {text}
             <span className="underline font-extrabold cursor-pointer">
-                Sign Up
+                {link}
             </span>
         </p>
     )
