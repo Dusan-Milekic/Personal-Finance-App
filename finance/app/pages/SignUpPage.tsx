@@ -50,7 +50,7 @@ export default function SignUpPage() {
                         <Button text={"Create Account"} disabled={pending}/>
                         </form>
                         <Message text={"Already have an account?"} link={"Login"} />
-
+                      
                     </div>
 
                 </div>
