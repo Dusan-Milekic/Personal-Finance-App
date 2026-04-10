@@ -7,6 +7,8 @@ import { getBills } from "../lib/db/bills";
 import { getPot } from "../lib/db/pot";
 import { getExpense } from "../lib/db/expense";
 import { GetIncome } from "../lib/db/income";
+import Link from "next/link";
+import Navbar from "../components/Navbar";
 
 export default async function HomePage() {
     const user = await checkAuth();
@@ -19,38 +21,11 @@ export default async function HomePage() {
     return (
         <div className="flex h-screen overflow-hidden">
 
-            {/* SIDEBAR - desktop */}
-            <nav className="bg-black hidden 2xl:flex flex-col pt-12 w-64 shrink-0 rounded-r-xl relative">
-                <img src="/assets/images/logo-large.svg" className="w-fit mx-auto" />
-                <ul className="text-white font-bold flex flex-col gap-1 mt-10">
-                    <div className="flex items-center px-8 py-4 hover:bg-gray-700 cursor-pointer gap-3 rounded-r-full mr-4">
-                        <img src="/assets/images/icon-nav-overview.svg" className="w-6 h-6" />
-                        <li>Overview</li>
-                    </div>
-                    <div className="flex items-center px-8 py-4 hover:bg-gray-700 cursor-pointer gap-3 rounded-r-full mr-4">
-                        <img src="/assets/images/icon-nav-budgets.svg" className="w-6 h-6" />
-                        <li>Budgets</li>
-                    </div>
-                    <div className="flex items-center px-8 py-4 hover:bg-gray-700 cursor-pointer gap-3 rounded-r-full mr-4">
-                        <img src="/assets/images/icon-nav-pots.svg" className="w-6 h-6" />
-                        <li>Pots</li>
-                    </div>
-                    <div className="flex items-center px-8 py-4 hover:bg-gray-700 cursor-pointer gap-3 rounded-r-full mr-4">
-                        <img src="/assets/images/icon-nav-recurring-bills.svg" className="w-6 h-6" />
-                        <li>Recurring Bills</li>
-                    </div>
-                </ul>
-
-                {/* Minimize dugme */}
-                <div className="mt-auto mb-8 flex items-center px-8 py-4 hover:bg-gray-700 cursor-pointer gap-3 rounded-r-full mr-4 text-white font-bold">
-                    <img src="/assets/images/icon-minimize-menu.svg" className="w-6 h-6" />
-                    <span>Minimize Menu</span>
-                </div>
-            </nav>
+            <Navbar />
 
             {/* MAIN CONTENT */}
             <div className="flex-1 overflow-y-auto pb-24 2xl:pb-6">
-                <div className="px-4 py-6 sm:px-6 lg:px-10 max-w-screen-xl mx-auto">
+                <div className="px-4 py-6 sm:px-6 lg:px-10 max-w-7xl mx-auto">
 
                     <h1 className="mb-8 text-[32px] font-bold">Overview</h1>
 
@@ -121,22 +96,22 @@ export default async function HomePage() {
             {/* BOTTOM NAV - mobile/tablet */}
             <nav className="2xl:hidden fixed bottom-0 left-0 right-0 bg-black rounded-t-2xl z-50">
                 <div className="flex justify-around items-center px-4 pt-3 pb-2">
-                    <div className="flex flex-col items-center gap-1 px-4 py-2 border-b-4 border-green-400 cursor-pointer">
+                    <Link href="/home" className="flex flex-col items-center gap-1 px-4 py-2 border-b-4 border-green-400 cursor-pointer">
                         <img src="/assets/images/icon-nav-overview.svg" className="w-6 h-6" />
                         <span className="text-white text-[10px] font-medium">Overview</span>
-                    </div>
-                    <div className="flex flex-col items-center gap-1 px-4 py-2 border-b-4 border-transparent hover:border-gray-500 cursor-pointer">
+                    </Link>
+                    <Link href="/budgets" className="flex flex-col items-center gap-1 px-4 py-2 border-b-4 border-transparent hover:border-gray-500 cursor-pointer">
                         <img src="/assets/images/icon-nav-budgets.svg" className="w-6 h-6" />
                         <span className="text-gray-400 text-[10px] font-medium">Budgets</span>
-                    </div>
-                    <div className="flex flex-col items-center gap-1 px-4 py-2 border-b-4 border-transparent hover:border-gray-500 cursor-pointer">
+                    </Link>
+                    <Link href="/pots" className="flex flex-col items-center gap-1 px-4 py-2 border-b-4 border-transparent hover:border-gray-500 cursor-pointer">
                         <img src="/assets/images/icon-nav-pots.svg" className="w-6 h-6" />
                         <span className="text-gray-400 text-[10px] font-medium">Pots</span>
-                    </div>
-                    <div className="flex flex-col items-center gap-1 px-4 py-2 border-b-4 border-transparent hover:border-gray-500 cursor-pointer">
+                    </Link>
+                    <Link href="/recurring-bills" className="flex flex-col items-center gap-1 px-4 py-2 border-b-4 border-transparent hover:border-gray-500 cursor-pointer">
                         <img src="/assets/images/icon-nav-recurring-bills.svg" className="w-6 h-6" />
                         <span className="text-gray-400 text-[10px] font-medium">Bills</span>
-                    </div>
+                    </Link>
                 </div>
             </nav>
 
