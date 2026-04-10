@@ -9,5 +9,19 @@ async function getBalance(userId: number): Promise<number | undefined> {
     return balance?.amount
 }
 
+ async function addBalance(userId: number, amount: number) {
+  try {
+    await prisma.balance.upsert({
+      where: { userId },
+      update: { amount: { increment: amount } },
+      create: { userId, amount },
+    });
 
-export {getBalance}
+    return { message: "Successfully deposited!" };
+  } catch (e) {
+    console.error(e);
+    return { message: "Server error" };
+  }
+}
+
+export {getBalance,addBalance}

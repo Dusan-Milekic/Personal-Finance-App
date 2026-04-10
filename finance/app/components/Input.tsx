@@ -1,3 +1,5 @@
+"use client"
+import {useRef, Ref} from "react";
 export default function Input({text,name}: {text?: string,name?: string}) {
     return (
         <div className="flex flex-col">

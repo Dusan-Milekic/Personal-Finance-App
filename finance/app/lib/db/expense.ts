@@ -6,4 +6,6 @@ async function  getExpense(userId:number) {
     return expense[0]
 }
 
+
+
 export {getExpense}
