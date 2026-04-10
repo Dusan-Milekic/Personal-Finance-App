@@ -9,4 +9,5 @@ async function getBalance(userId: number): Promise<number | undefined> {
     return balance?.amount
 }
 
+
 export {getBalance}
