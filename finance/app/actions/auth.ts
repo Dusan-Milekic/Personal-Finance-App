@@ -3,15 +3,7 @@ import { SignupFormSchema, FormState } from '@/app/lib/definitions'
 import * as bcrypt from 'bcrypt-ts'
 import {prisma} from "../lib/prisma"
 import { redirect } from 'next/navigation';
-
-type LoginState = {
-  errors?: {
-        email?: string[] | undefined;
-        password?: string[] | undefined;
-    } | undefined;
-    message?: string | undefined;
-
-} | undefined
+import { cookies } from 'next/headers'
 
 
  async function signup(state: FormState, formData: FormData) {
@@ -49,46 +41,68 @@ type LoginState = {
       name: name,
       email: email,
       password: hashedPassword,
+      token: crypto.randomUUID(),
     }})
 
     redirect('/login')
     
   
 }
+type LoginState = {
+  errors?: {
+        email?: string[] | undefined;
+        password?: string[] | undefined;
+    } | undefined;
 
-async function login(state: LoginState,formData: FormData) {
+} | undefined
 
+async function login(state: LoginState, formData: FormData) {
+  const email = formData.get('email') as string
+  const password = formData.get('password') as string
 
-    const email = formData.get('email')
-    const password = formData.get('password')
-
-  if(typeof email !== 'string' || typeof password !== 'string') {
+  if (!email || !password) {
     return {
-      message: 'Email and password are required.',
+      errors: {
+        email: !email ? ['Email is required.'] : undefined,
+        password: !password ? ['Password is required.'] : undefined,
+      }
     }
   }
 
-  
-
-  const user = await prisma.user.findUnique({ where: { email: email } })
-  
+  const user = await prisma.user.findUnique({ where: { email } })
   if (!user) {
-    return {
-      message: 'Invalid email or password.',
-    }
+    return { errors: { email: ['Invalid email or password.'] } }
   }
 
   const passwordMatch = await bcrypt.compare(password, user.password)
-  
   if (!passwordMatch) {
-    return {
-      message: 'Invalid email or password.',
-    }
+    return { errors: { password: ['Invalid email or password.'] } }
   }
 
-  redirect('/dashboard')
-
-  
+  const cookieStore = await cookies()
+  cookieStore.set('token', user.token, {
+    httpOnly: true,
+    secure:true,
+    sameSite: 'lax',
+    maxAge: 60 * 60 * 24 * 7, // 1 week
+  })
+  redirect('/home')
 }
 
-export { signup, login }
+
+
+// u auth.ts
+async function checkAuth() {
+  const cookieStore = await cookies()
+  const token = cookieStore.get('token')?.value
+  if (!token) redirect('/login')
+
+  const user = await prisma.user.findFirst(
+    { where: { token },
+      omit: {password:true}})
+  if (!user) redirect('/login')
+
+  return user // vrati usera
+}
+
+export { signup, login, checkAuth }

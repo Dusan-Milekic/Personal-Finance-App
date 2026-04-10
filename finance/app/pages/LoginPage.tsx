@@ -32,16 +32,16 @@ export default function LoginPage() {
 
                         <form action={action}>
 
-                            <Email text={"Email"} />
+                            <Email text={"Email"} name={"email"} />
                             
-                            <Password text={"Password"} showPassword={showPassword} setShowPassword={setShowPassword} />
+                            <Password text={"Password"}  showPassword={showPassword} setShowPassword={setShowPassword} />
 
                             <Button text={"Login"} disabled={pending}/>
                          </form>
                         <Message text={"Don't have an account?"} link={"Sign Up"} />
-                        {state?.message && <p>{state.message}</p>}
                         {state?.errors?.email && <p>{state.errors.email}</p>}
                         {state?.errors?.password && <p>{state.errors.password}</p>}
+                    
                     </div>
 
                 </div>
